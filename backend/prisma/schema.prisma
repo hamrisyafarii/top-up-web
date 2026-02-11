@@ -21,7 +21,7 @@ model Game {
   developer String
   image     String
   category  String
-  puoplar   Boolean?
+  popular   Boolean?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

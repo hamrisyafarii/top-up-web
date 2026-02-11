@@ -529,7 +529,7 @@ export const GameScalarFieldEnum = {
   developer: 'developer',
   image: 'image',
   category: 'category',
-  puoplar: 'puoplar',
+  popular: 'popular',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -30,7 +30,7 @@ export type GameMinAggregateOutputType = {
   developer: string | null
   image: string | null
   category: string | null
-  puoplar: boolean | null
+  popular: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -41,7 +41,7 @@ export type GameMaxAggregateOutputType = {
   developer: string | null
   image: string | null
   category: string | null
-  puoplar: boolean | null
+  popular: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,7 +52,7 @@ export type GameCountAggregateOutputType = {
   developer: number
   image: number
   category: number
-  puoplar: number
+  popular: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -65,7 +65,7 @@ export type GameMinAggregateInputType = {
   developer?: true
   image?: true
   category?: true
-  puoplar?: true
+  popular?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -76,7 +76,7 @@ export type GameMaxAggregateInputType = {
   developer?: true
   image?: true
   category?: true
-  puoplar?: true
+  popular?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -87,7 +87,7 @@ export type GameCountAggregateInputType = {
   developer?: true
   image?: true
   category?: true
-  puoplar?: true
+  popular?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -171,7 +171,7 @@ export type GameGroupByOutputType = {
   developer: string
   image: string
   category: string
-  puoplar: boolean | null
+  popular: boolean | null
   createdAt: Date
   updatedAt: Date
   _count: GameCountAggregateOutputType | null
@@ -203,7 +203,7 @@ export type GameWhereInput = {
   developer?: Prisma.StringFilter<"Game"> | string
   image?: Prisma.StringFilter<"Game"> | string
   category?: Prisma.StringFilter<"Game"> | string
-  puoplar?: Prisma.BoolNullableFilter<"Game"> | boolean | null
+  popular?: Prisma.BoolNullableFilter<"Game"> | boolean | null
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
 }
@@ -214,7 +214,7 @@ export type GameOrderByWithRelationInput = {
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
-  puoplar?: Prisma.SortOrderInput | Prisma.SortOrder
+  popular?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -228,7 +228,7 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   developer?: Prisma.StringFilter<"Game"> | string
   image?: Prisma.StringFilter<"Game"> | string
   category?: Prisma.StringFilter<"Game"> | string
-  puoplar?: Prisma.BoolNullableFilter<"Game"> | boolean | null
+  popular?: Prisma.BoolNullableFilter<"Game"> | boolean | null
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
 }, "id">
@@ -239,7 +239,7 @@ export type GameOrderByWithAggregationInput = {
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
-  puoplar?: Prisma.SortOrderInput | Prisma.SortOrder
+  popular?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.GameCountOrderByAggregateInput
@@ -256,7 +256,7 @@ export type GameScalarWhereWithAggregatesInput = {
   developer?: Prisma.StringWithAggregatesFilter<"Game"> | string
   image?: Prisma.StringWithAggregatesFilter<"Game"> | string
   category?: Prisma.StringWithAggregatesFilter<"Game"> | string
-  puoplar?: Prisma.BoolNullableWithAggregatesFilter<"Game"> | boolean | null
+  popular?: Prisma.BoolNullableWithAggregatesFilter<"Game"> | boolean | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
 }
@@ -267,7 +267,7 @@ export type GameCreateInput = {
   developer: string
   image: string
   category: string
-  puoplar?: boolean | null
+  popular?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -278,7 +278,7 @@ export type GameUncheckedCreateInput = {
   developer: string
   image: string
   category: string
-  puoplar?: boolean | null
+  popular?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -289,7 +289,7 @@ export type GameUpdateInput = {
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
-  puoplar?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  popular?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -300,7 +300,7 @@ export type GameUncheckedUpdateInput = {
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
-  puoplar?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  popular?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -311,7 +311,7 @@ export type GameCreateManyInput = {
   developer: string
   image: string
   category: string
-  puoplar?: boolean | null
+  popular?: boolean | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -322,7 +322,7 @@ export type GameUpdateManyMutationInput = {
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
-  puoplar?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  popular?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -333,7 +333,7 @@ export type GameUncheckedUpdateManyInput = {
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
-  puoplar?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
+  popular?: Prisma.NullableBoolFieldUpdateOperationsInput | boolean | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -344,7 +344,7 @@ export type GameCountOrderByAggregateInput = {
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
-  puoplar?: Prisma.SortOrder
+  popular?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -355,7 +355,7 @@ export type GameMaxOrderByAggregateInput = {
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
-  puoplar?: Prisma.SortOrder
+  popular?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -366,7 +366,7 @@ export type GameMinOrderByAggregateInput = {
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
-  puoplar?: Prisma.SortOrder
+  popular?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -391,7 +391,7 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   developer?: boolean
   image?: boolean
   category?: boolean
-  puoplar?: boolean
+  popular?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["game"]>
@@ -402,7 +402,7 @@ export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   developer?: boolean
   image?: boolean
   category?: boolean
-  puoplar?: boolean
+  popular?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["game"]>
@@ -413,7 +413,7 @@ export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   developer?: boolean
   image?: boolean
   category?: boolean
-  puoplar?: boolean
+  popular?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["game"]>
@@ -424,12 +424,12 @@ export type GameSelectScalar = {
   developer?: boolean
   image?: boolean
   category?: boolean
-  puoplar?: boolean
+  popular?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "developer" | "image" | "category" | "puoplar" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "developer" | "image" | "category" | "popular" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
 
 export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Game"
@@ -440,7 +440,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     developer: string
     image: string
     category: string
-    puoplar: boolean | null
+    popular: boolean | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["game"]>
@@ -871,7 +871,7 @@ export interface GameFieldRefs {
   readonly developer: Prisma.FieldRef<"Game", 'String'>
   readonly image: Prisma.FieldRef<"Game", 'String'>
   readonly category: Prisma.FieldRef<"Game", 'String'>
-  readonly puoplar: Prisma.FieldRef<"Game", 'Boolean'>
+  readonly popular: Prisma.FieldRef<"Game", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Game", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Game", 'DateTime'>
 }

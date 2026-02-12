@@ -23,12 +23,12 @@ export class GamesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
-    return this.gamesService.update(+id, updateGameDto);
+  update(@Param('id') gameId: string, @Body() updateGameDto: UpdateGameDto) {
+    return this.gamesService.update(gameId, updateGameDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.gamesService.remove(+id);
+  remove(@Param('id') gameId: string) {
+    return this.gamesService.remove(gameId);
   }
 }

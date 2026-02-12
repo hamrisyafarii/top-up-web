@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { GameRepository } from './games.repository';
@@ -9,8 +9,14 @@ import { GameEntity } from './entities/game.entity';
 export class GamesService {
   constructor(private readonly gamesRepo: GameRepository) {}
 
-  create(createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
+  async create(createGameDto: CreateGameDto): Promise<ApiResponse<GameEntity>> {
+    const game = await this.gamesRepo.create(createGameDto);
+
+    return {
+      statusCode: 201,
+      message: 'Successfully create new game',
+      data: game,
+    };
   }
 
   async findAll(): Promise<ApiResponse<GameEntity[]>> {
@@ -27,11 +33,34 @@ export class GamesService {
     return `This action returns a #${id} game`;
   }
 
-  update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
+  async update(gameId: string, updateGameDto: UpdateGameDto): Promise<ApiResponse<GameEntity>> {
+    const exsitsGame = await this.gamesRepo.findGameById(gameId);
+
+    if (!exsitsGame) {
+      throw new BadRequestException('Game does not exists');
+    }
+
+    const gameUpdated = await this.gamesRepo.update(gameId, updateGameDto);
+
+    return {
+      statusCode: 200,
+      message: `Successfully updated game ${exsitsGame.title}`,
+      data: gameUpdated,
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} game`;
+  async remove(gameId: string): Promise<ApiResponse<GameEntity>> {
+    const exsitsGame = await this.gamesRepo.findGameById(gameId);
+
+    if (!exsitsGame) {
+      throw new BadRequestException('Game does not exists');
+    }
+
+    await this.gamesRepo.delete(gameId);
+
+    return {
+      statusCode: 200,
+      message: `Successfully deleted game ${exsitsGame.title}`,
+    };
   }
 }

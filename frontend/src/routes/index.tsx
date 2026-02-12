@@ -1,9 +1,14 @@
 import HomePage from "@/pages/home";
-import { createBrowserRouter } from "react-router-dom";
+import TopupPage from "@/pages/topup";
+import {createBrowserRouter} from "react-router-dom";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <HomePage />,
+  },
+  {
+    path: "/topup/:id",
+    element: <TopupPage />,
   },
 ]);

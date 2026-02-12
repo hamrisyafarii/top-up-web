@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { GameRepository } from './games.repository';
+import { ApiResponse } from 'src/common/interfaces/response.interfce';
+import { GameEntity } from './entities/game.entity';
 
 @Injectable()
 export class GamesService {
@@ -11,8 +13,14 @@ export class GamesService {
     return 'This action adds a new game';
   }
 
-  async findAll() {
-    return await this.gamesRepo.findMany();
+  async findAll(): Promise<ApiResponse<GameEntity[]>> {
+    const games = await this.gamesRepo.findMany();
+
+    return {
+      statusCode: 200,
+      message: 'Success get all games',
+      data: games,
+    };
   }
 
   findOne(id: number) {

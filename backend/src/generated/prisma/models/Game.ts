@@ -27,6 +27,7 @@ export type AggregateGame = {
 export type GameMinAggregateOutputType = {
   id: string | null
   title: string | null
+  slug: string | null
   developer: string | null
   image: string | null
   category: string | null
@@ -38,6 +39,7 @@ export type GameMinAggregateOutputType = {
 export type GameMaxAggregateOutputType = {
   id: string | null
   title: string | null
+  slug: string | null
   developer: string | null
   image: string | null
   category: string | null
@@ -49,6 +51,7 @@ export type GameMaxAggregateOutputType = {
 export type GameCountAggregateOutputType = {
   id: number
   title: number
+  slug: number
   developer: number
   image: number
   category: number
@@ -62,6 +65,7 @@ export type GameCountAggregateOutputType = {
 export type GameMinAggregateInputType = {
   id?: true
   title?: true
+  slug?: true
   developer?: true
   image?: true
   category?: true
@@ -73,6 +77,7 @@ export type GameMinAggregateInputType = {
 export type GameMaxAggregateInputType = {
   id?: true
   title?: true
+  slug?: true
   developer?: true
   image?: true
   category?: true
@@ -84,6 +89,7 @@ export type GameMaxAggregateInputType = {
 export type GameCountAggregateInputType = {
   id?: true
   title?: true
+  slug?: true
   developer?: true
   image?: true
   category?: true
@@ -168,6 +174,7 @@ export type GameGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type GameGroupByOutputType = {
   id: string
   title: string
+  slug: string
   developer: string
   image: string
   category: string
@@ -200,6 +207,7 @@ export type GameWhereInput = {
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   id?: Prisma.StringFilter<"Game"> | string
   title?: Prisma.StringFilter<"Game"> | string
+  slug?: Prisma.StringFilter<"Game"> | string
   developer?: Prisma.StringFilter<"Game"> | string
   image?: Prisma.StringFilter<"Game"> | string
   category?: Prisma.StringFilter<"Game"> | string
@@ -211,6 +219,7 @@ export type GameWhereInput = {
 export type GameOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -221,6 +230,7 @@ export type GameOrderByWithRelationInput = {
 
 export type GameWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  slug?: string
   AND?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
@@ -231,11 +241,12 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   popular?: Prisma.BoolNullableFilter<"Game"> | boolean | null
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
-}, "id">
+}, "id" | "slug">
 
 export type GameOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -253,6 +264,7 @@ export type GameScalarWhereWithAggregatesInput = {
   NOT?: Prisma.GameScalarWhereWithAggregatesInput | Prisma.GameScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Game"> | string
   title?: Prisma.StringWithAggregatesFilter<"Game"> | string
+  slug?: Prisma.StringWithAggregatesFilter<"Game"> | string
   developer?: Prisma.StringWithAggregatesFilter<"Game"> | string
   image?: Prisma.StringWithAggregatesFilter<"Game"> | string
   category?: Prisma.StringWithAggregatesFilter<"Game"> | string
@@ -264,6 +276,7 @@ export type GameScalarWhereWithAggregatesInput = {
 export type GameCreateInput = {
   id?: string
   title: string
+  slug: string
   developer: string
   image: string
   category: string
@@ -275,6 +288,7 @@ export type GameCreateInput = {
 export type GameUncheckedCreateInput = {
   id?: string
   title: string
+  slug: string
   developer: string
   image: string
   category: string
@@ -286,6 +300,7 @@ export type GameUncheckedCreateInput = {
 export type GameUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -297,6 +312,7 @@ export type GameUpdateInput = {
 export type GameUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -308,6 +324,7 @@ export type GameUncheckedUpdateInput = {
 export type GameCreateManyInput = {
   id?: string
   title: string
+  slug: string
   developer: string
   image: string
   category: string
@@ -319,6 +336,7 @@ export type GameCreateManyInput = {
 export type GameUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -330,6 +348,7 @@ export type GameUpdateManyMutationInput = {
 export type GameUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   developer?: Prisma.StringFieldUpdateOperationsInput | string
   image?: Prisma.StringFieldUpdateOperationsInput | string
   category?: Prisma.StringFieldUpdateOperationsInput | string
@@ -341,6 +360,7 @@ export type GameUncheckedUpdateManyInput = {
 export type GameCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -352,6 +372,7 @@ export type GameCountOrderByAggregateInput = {
 export type GameMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -363,6 +384,7 @@ export type GameMaxOrderByAggregateInput = {
 export type GameMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   title?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   developer?: Prisma.SortOrder
   image?: Prisma.SortOrder
   category?: Prisma.SortOrder
@@ -388,6 +410,7 @@ export type DateTimeFieldUpdateOperationsInput = {
 export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  slug?: boolean
   developer?: boolean
   image?: boolean
   category?: boolean
@@ -399,6 +422,7 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  slug?: boolean
   developer?: boolean
   image?: boolean
   category?: boolean
@@ -410,6 +434,7 @@ export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   title?: boolean
+  slug?: boolean
   developer?: boolean
   image?: boolean
   category?: boolean
@@ -421,6 +446,7 @@ export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type GameSelectScalar = {
   id?: boolean
   title?: boolean
+  slug?: boolean
   developer?: boolean
   image?: boolean
   category?: boolean
@@ -429,7 +455,7 @@ export type GameSelectScalar = {
   updatedAt?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "developer" | "image" | "category" | "popular" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "title" | "slug" | "developer" | "image" | "category" | "popular" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
 
 export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Game"
@@ -437,6 +463,7 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     title: string
+    slug: string
     developer: string
     image: string
     category: string
@@ -868,6 +895,7 @@ export interface Prisma__GameClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface GameFieldRefs {
   readonly id: Prisma.FieldRef<"Game", 'String'>
   readonly title: Prisma.FieldRef<"Game", 'String'>
+  readonly slug: Prisma.FieldRef<"Game", 'String'>
   readonly developer: Prisma.FieldRef<"Game", 'String'>
   readonly image: Prisma.FieldRef<"Game", 'String'>
   readonly category: Prisma.FieldRef<"Game", 'String'>

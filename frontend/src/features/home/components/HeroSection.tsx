@@ -79,7 +79,7 @@ const HeroSection = () => {
               {[...games, ...games].map((game, i) => (
                 <Link
                   key={`${game.id}-${i}`}
-                  to={`/topup/${game.id}`}
+                  to={`/topup/${game.slug}`}
                   className="flex items-center gap-3  rounded-xl px-4 py-3 shrink-0 card-lift bg-card cursor-pointer">
                   <img
                     src={game.image}

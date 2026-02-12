@@ -21,7 +21,7 @@ const GameGrid = () => {
           {games.map((game, i) => (
             <Link
               key={game.id}
-              to={`/topup/${game.id}`}
+              to={`/topup/${game.slug}`}
               className="group relative surface rounded-xl overflow-hidden card-lift"
               style={{animationDelay: `${i * 80}ms`}}>
               <div className="aspect-3/4 overflow-hidden">

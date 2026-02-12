@@ -6,6 +6,9 @@ export class CreateGameDto {
   title: string;
 
   @IsString()
+  slug: string;
+
+  @IsString()
   @MaxLength(50)
   developer: string;
 

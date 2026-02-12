@@ -71,6 +71,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const GameScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  slug: 'slug',
   developer: 'developer',
   image: 'image',
   category: 'category',

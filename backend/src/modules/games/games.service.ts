@@ -24,7 +24,7 @@ export class GamesService {
 
     return {
       statusCode: 200,
-      message: 'Success get all games',
+      message: 'Successfully get all games',
       data: games,
     };
   }

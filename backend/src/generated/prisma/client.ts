@@ -47,3 +47,8 @@ path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
  * 
  */
 export type Game = Prisma.GameModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel

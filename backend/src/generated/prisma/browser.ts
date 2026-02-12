@@ -22,3 +22,8 @@ export * from './enums.js';
  * 
  */
 export type Game = Prisma.GameModel
+/**
+ * Model Product
+ * 
+ */
+export type Product = Prisma.ProductModel

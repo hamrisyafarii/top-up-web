@@ -9,7 +9,18 @@ export class GameRepository {
   constructor(private readonly database: DatabaseService) {}
 
   findMany() {
-    return this.database.game.findMany();
+    return this.database.game.findMany({
+      include: {
+        product: {
+          select: {
+            amount: true,
+            bonus: true,
+            price: true,
+            label: true,
+          },
+        },
+      },
+    });
   }
 
   create(createGameDto: CreateGameDto) {

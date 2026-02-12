@@ -1,8 +1,10 @@
-import { games } from "@/mock/game";
-import { Link } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
+import {Link} from "react-router-dom";
+import {Badge} from "@/components/ui/badge";
+import {useGames} from "@/hooks/useGames";
 
 const GameGrid = () => {
+  const {games} = useGames();
+
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
@@ -21,7 +23,7 @@ const GameGrid = () => {
               key={game.id}
               to={`/topup/${game.id}`}
               className="group relative surface rounded-xl overflow-hidden card-lift"
-              style={{ animationDelay: `${i * 80}ms` }}>
+              style={{animationDelay: `${i * 80}ms`}}>
               <div className="aspect-3/4 overflow-hidden">
                 <img
                   src={game.image}

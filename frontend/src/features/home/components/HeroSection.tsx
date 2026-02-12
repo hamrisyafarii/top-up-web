@@ -1,9 +1,11 @@
-import { ArrowRight, Zap, Shield, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
-import { games } from "@/mock/game";
+import {ArrowRight, Zap, Shield, Clock} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Link} from "react-router-dom";
+import {useGames} from "@/hooks/useGames";
 
 const HeroSection = () => {
+  const {games} = useGames();
+
   return (
     <section className="relative pt-24 pb-16 overflow-hidden">
       {/* Background pattern */}
@@ -52,10 +54,10 @@ const HeroSection = () => {
 
         <div className="flex flex-wrap justify-center gap-6 mb-14">
           {[
-            { icon: Zap, text: "Instant Delivery" },
-            { icon: Shield, text: "Secure Payment" },
-            { icon: Clock, text: "24/7 Support" },
-          ].map(({ icon: Icon, text }) => (
+            {icon: Zap, text: "Instant Delivery"},
+            {icon: Shield, text: "Secure Payment"},
+            {icon: Clock, text: "24/7 Support"},
+          ].map(({icon: Icon, text}) => (
             <div
               key={text}
               className="flex items-center gap-2 text-sm text-muted-foreground">

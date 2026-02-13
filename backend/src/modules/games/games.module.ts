@@ -8,5 +8,6 @@ import { GameRepository } from './games.repository';
   controllers: [GamesController],
   providers: [GamesService, GameRepository],
   imports: [DatabaseModule],
+  exports: [GameRepository],
 })
 export class GamesModule {}

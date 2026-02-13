@@ -10,15 +10,8 @@ export class GameRepository {
 
   findMany() {
     return this.database.game.findMany({
-      include: {
-        product: {
-          select: {
-            amount: true,
-            bonus: true,
-            price: true,
-            label: true,
-          },
-        },
+      orderBy: {
+        createdAt: 'asc',
       },
     });
   }
@@ -26,6 +19,17 @@ export class GameRepository {
   create(createGameDto: CreateGameDto) {
     return this.database.game.create({
       data: createGameDto,
+    });
+  }
+
+  findProductsByGameSlug(slug: string) {
+    return this.database.game.findUnique({
+      where: {
+        slug,
+      },
+      include: {
+        product: true,
+      },
     });
   }
 

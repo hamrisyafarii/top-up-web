@@ -29,11 +29,24 @@ export class GamesService {
     };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} game`;
+  async findProductsBySlug(slug: string): Promise<ApiResponse> {
+    const game = await this.gamesRepo.findProductsByGameSlug(slug);
+
+    if (!game) {
+      throw new BadRequestException('Game not found !');
+    }
+
+    return {
+      statusCode: 200,
+      message: `Successfully get products data with slug: ${game.slug}`,
+      data: {
+        game: game,
+        products: game.product,
+      },
+    };
   }
 
-  async update(gameId: string, updateGameDto: UpdateGameDto): Promise<ApiResponse<GameEntity>> {
+  async update(gameId: string, updateGameDto: UpdateGameDto): Promise<ApiResponse> {
     const exsitsGame = await this.gamesRepo.findGameById(gameId);
 
     if (!exsitsGame) {
@@ -49,7 +62,7 @@ export class GamesService {
     };
   }
 
-  async remove(gameId: string): Promise<ApiResponse<GameEntity>> {
+  async remove(gameId: string): Promise<ApiResponse> {
     const exsitsGame = await this.gamesRepo.findGameById(gameId);
 
     if (!exsitsGame) {

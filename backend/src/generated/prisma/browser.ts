@@ -27,3 +27,8 @@ export type Game = Prisma.GameModel
  * 
  */
 export type Product = Prisma.ProductModel
+/**
+ * Model PaymentMethod
+ * 
+ */
+export type PaymentMethod = Prisma.PaymentMethodModel

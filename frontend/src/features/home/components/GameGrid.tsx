@@ -20,7 +20,7 @@ const GameGrid = () => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {games.map((game, i) => (
             <Link
-              key={game.id}
+              key={game.slug}
               to={`/topup/${game.slug}`}
               className="group relative surface rounded-xl overflow-hidden card-lift"
               style={{animationDelay: `${i * 80}ms`}}>

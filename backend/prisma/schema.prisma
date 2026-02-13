@@ -40,3 +40,14 @@ model Product {
   gameId String
   game   Game   @relation(fields: [gameId], references: [id])
 }
+
+model PaymentMethod {
+  id   String @id @default(uuid())
+  name String
+  code String @unique
+  type String
+  icon String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

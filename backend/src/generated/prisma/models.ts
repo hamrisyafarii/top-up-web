@@ -10,4 +10,5 @@
  */
 export type * from './models/Game.js'
 export type * from './models/Product.js'
+export type * from './models/PaymentMethod.js'
 export type * from './commonInputTypes.js'

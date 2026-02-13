@@ -4,9 +4,17 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { GamesModule } from './modules/games/games.module';
 import { DatabaseModule } from './infrastructure/datebase/database.module';
+import { ProductsModule } from './modules/products/products.module';
+import { PaymentMethodModule } from './modules/payment_method/payment_method.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(), GamesModule, DatabaseModule],
+  imports: [
+    ConfigModule.forRoot(),
+    GamesModule,
+    DatabaseModule,
+    ProductsModule,
+    PaymentMethodModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

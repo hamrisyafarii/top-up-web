@@ -1,8 +1,8 @@
-import { Search, Gamepad2, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import {Search, Gamepad2, Menu, X} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Input} from "@/components/ui/input";
+import {Link} from "react-router-dom";
+import {useState} from "react";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,15 +29,17 @@ const Navbar = () => {
 
         {/* Actions - Desktop */}
         <div className="hidden md:flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className=" hover:text-foreground bg-card">
-            Login
-          </Button>
-          <Button size="sm" className="bg-primary hover:bg-primary/90">
-            Register
-          </Button>
+          <Link to={"/login"}>
+            <Button size="sm" className="flex-1 bg-card">
+              Login
+            </Button>
+          </Link>
+
+          <Link to={"/register"}>
+            <Button size="sm" className="flex-1 bg-primary">
+              Register
+            </Button>
+          </Link>
         </div>
 
         {/* Mobile toggle */}
@@ -63,12 +65,17 @@ const Navbar = () => {
             />
           </div>
           <div className="flex gap-2">
-            <Button size="sm" className="flex-1 bg-card">
-              Login
-            </Button>
-            <Button size="sm" className="flex-1 bg-primary">
-              Register
-            </Button>
+            <Link to={"/login"}>
+              <Button size="sm" className="flex-1 bg-card">
+                Login
+              </Button>
+            </Link>
+
+            <Link to={"/register"}>
+              <Button size="sm" className="flex-1 bg-primary">
+                Register
+              </Button>
+            </Link>
           </div>
         </div>
       )}

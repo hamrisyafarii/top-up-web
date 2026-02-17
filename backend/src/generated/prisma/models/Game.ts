@@ -405,16 +405,8 @@ export type GameScalarRelationFilter = {
   isNot?: Prisma.GameWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type NullableBoolFieldUpdateOperationsInput = {
   set?: boolean | null
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type GameCreateNestedOneWithoutProductInput = {

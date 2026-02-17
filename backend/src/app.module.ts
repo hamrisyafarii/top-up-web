@@ -6,6 +6,7 @@ import { GamesModule } from './modules/games/games.module';
 import { DatabaseModule } from './infrastructure/datebase/database.module';
 import { ProductsModule } from './modules/products/products.module';
 import { PaymentMethodModule } from './modules/payment_method/payment_method.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PaymentMethodModule } from './modules/payment_method/payment_method.mod
     DatabaseModule,
     ProductsModule,
     PaymentMethodModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

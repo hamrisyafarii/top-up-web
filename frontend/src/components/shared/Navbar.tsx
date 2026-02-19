@@ -1,9 +1,10 @@
-import {Search, Gamepad2, Menu, X, Receipt, LogOut, User} from "lucide-react";
+import {Search, Gamepad2, Menu, X, LogOut, User} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Link} from "react-router-dom";
 import {useState} from "react";
 import {useAuth} from "@/hooks/useAuth";
+import {Tooltip, TooltipContent, TooltipTrigger} from "../ui/tooltip";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -52,23 +53,24 @@ const Navbar = () => {
                     {user.username || user.email}
                   </Link>
                 </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-muted-foreground hover:text-foreground"
-                  asChild>
-                  <Link
-                    to="/transactions"
-                    className="flex items-center gap-1.5">
-                    <Receipt className="h-4 w-4" />
-                    History
-                  </Link>
-                </Button>
+                {/* Upcoming feature */}
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <span className="inline-block w-fit">
+                      <Button variant="ghost" disabled>
+                        History
+                      </Button>
+                    </span>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>This feature is currently unavailable</p>
+                  </TooltipContent>
+                </Tooltip>
                 <Button
                   variant="ghost"
                   onClick={handleLogout}
                   size="sm"
-                  className="text-muted-foreground hover:text-foreground">
+                  className="text-red-400 hover:text-foreground">
                   <LogOut className="h-4 w-4 mr-1" /> Logout
                 </Button>
               </>

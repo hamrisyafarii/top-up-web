@@ -6,13 +6,16 @@ import {router} from "./routes";
 import {ThemeProvider} from "./components/theme-provider";
 import {Toaster} from "./components/ui/sonner";
 import {AuthProvider} from "./context/AuthProvider";
+import {TooltipProvider} from "./components/ui/tooltip";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <AuthProvider>
       <ThemeProvider defaultTheme="dark">
-        <Toaster richColors position="bottom-center" />
-        <RouterProvider router={router} />
+        <TooltipProvider>
+          <Toaster richColors position="bottom-center" />
+          <RouterProvider router={router} />
+        </TooltipProvider>
       </ThemeProvider>
     </AuthProvider>
   </StrictMode>,

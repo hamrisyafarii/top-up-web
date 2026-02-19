@@ -15,14 +15,14 @@ export class AuthService {
   ) {}
 
   async register(createAuthDto: CreateAuthDto): Promise<ApiResponse<AuthResponse>> {
-    const existsUser = await this.authRepo.findUserByEmail(createAuthDto.email);
-    if (existsUser) {
-      throw new ConflictException('Email is already used');
-    }
-
     const existsUsername = await this.authRepo.findByUsername(createAuthDto.username);
     if (existsUsername) {
       throw new ConflictException('Username is already used');
+    }
+
+    const existsUser = await this.authRepo.findUserByEmail(createAuthDto.email);
+    if (existsUser) {
+      throw new ConflictException('Email is already used');
     }
 
     const hashadPassword = await bcrypt.hash(createAuthDto.password, 10);

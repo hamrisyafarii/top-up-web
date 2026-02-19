@@ -1,34 +1,96 @@
-import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
-import {Lock, Mail} from "lucide-react";
 import AuthLayout from "../components/AuthLayout";
+import {toast} from "sonner";
+import {Controller, useForm} from "react-hook-form";
+import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
+import {loginFormSchema, type LoginFormSchema} from "../forms/login";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {Button} from "@/components/ui/button";
+import {useAuth} from "@/hooks/useAuth";
+import {useNavigate} from "react-router-dom";
 
 const LoginPage = () => {
+  const {login, isLoading, user} = useAuth();
+  const navigate = useNavigate();
+
+  if (user && !isLoading) {
+    navigate("/");
+  }
+
+  const loginForm = useForm<LoginFormSchema>({
+    resolver: zodResolver(loginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const handleSubmitForm = async (values: LoginFormSchema) => {
+    try {
+      const res = await login(values);
+
+      if (res?.statusCode === 200) {
+        toast.success(res.message);
+        navigate("/");
+      }
+    } catch (error: any) {
+      if (error.response.data.statusCode === 401) {
+        toast.error(error.response.data.message);
+      }
+    }
+  };
+
   return (
     <AuthLayout isLogin>
-      <form className="space-y-4">
-        <div className="relative">
-          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            type="email"
-            placeholder="Email"
-            className="pl-9 bg-secondary border-border"
-            required
+      <form
+        onSubmit={loginForm.handleSubmit(handleSubmitForm)}
+        className="space-y-4">
+        <FieldGroup>
+          <Controller
+            name="email"
+            control={loginForm.control}
+            render={({field, fieldState}) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <Input
+                  {...field}
+                  id="email"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="user@example.com"
+                  autoComplete="off"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
           />
-        </div>
-        <div className="relative">
-          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-
-          <Input
-            type="password"
-            placeholder="Password"
-            className="pl-9 bg-secondary border-border"
-            minLength={6}
-            required
+          <Controller
+            name="password"
+            control={loginForm.control}
+            render={({field, fieldState}) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <Input
+                  {...field}
+                  id="password"
+                  aria-invalid={fieldState.invalid}
+                  placeholder="******"
+                  autoComplete="off"
+                  type="password"
+                />
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
           />
-        </div>
-        <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
-          Sign In
+        </FieldGroup>
+        <Button
+          disabled={isLoading}
+          type="submit"
+          className="w-full bg-primary hover:bg-primary/50">
+          {isLoading ? "loading..." : "Sign In"}
         </Button>
       </form>
     </AuthLayout>

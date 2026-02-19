@@ -1,11 +1,21 @@
-import {Search, Gamepad2, Menu, X} from "lucide-react";
+import {Search, Gamepad2, Menu, X, Receipt, LogOut, User} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {Link} from "react-router-dom";
 import {useState} from "react";
+import {useAuth} from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const {isLoading, user, logout} = useAuth();
+
+  const handleLogout = () => {
+    const alertLogout = confirm("Apakah kamu yakin ingin keluar?");
+
+    if (alertLogout) {
+      logout();
+    }
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass">
@@ -29,17 +39,56 @@ const Navbar = () => {
 
         {/* Actions - Desktop */}
         <div className="hidden md:flex items-center gap-2">
-          <Link to={"/login"}>
-            <Button size="sm" className="flex-1 bg-card">
-              Login
-            </Button>
-          </Link>
-
-          <Link to={"/register"}>
-            <Button size="sm" className="flex-1 bg-primary">
-              Register
-            </Button>
-          </Link>
+          {!isLoading &&
+            (user ? (
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground"
+                  asChild>
+                  <Link to="/profile" className="flex items-center gap-1.5">
+                    <User className="h-4 w-4" />
+                    {user.username || user.email}
+                  </Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground"
+                  asChild>
+                  <Link
+                    to="/transactions"
+                    className="flex items-center gap-1.5">
+                    <Receipt className="h-4 w-4" />
+                    History
+                  </Link>
+                </Button>
+                <Button
+                  variant="ghost"
+                  onClick={handleLogout}
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground">
+                  <LogOut className="h-4 w-4 mr-1" /> Logout
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-muted-foreground hover:text-foreground"
+                  asChild>
+                  <Link to="/login">Login</Link>
+                </Button>
+                <Button
+                  size="sm"
+                  className="bg-primary hover:bg-primary/90"
+                  asChild>
+                  <Link to="/register">Register</Link>
+                </Button>
+              </>
+            ))}
         </div>
 
         {/* Mobile toggle */}
@@ -65,17 +114,29 @@ const Navbar = () => {
             />
           </div>
           <div className="flex gap-2">
-            <Link to={"/login"}>
-              <Button size="sm" className="flex-1 bg-card">
-                Login
-              </Button>
-            </Link>
-
-            <Link to={"/register"}>
-              <Button size="sm" className="flex-1 bg-primary">
-                Register
-              </Button>
-            </Link>
+            {!isLoading &&
+              (user ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex-1"
+                  onClick={handleLogout}>
+                  <LogOut className="h-4 w-4 mr-1" /> Logout
+                </Button>
+              ) : (
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1 text-muted-foreground"
+                    asChild>
+                    <Link to="/login">Login</Link>
+                  </Button>
+                  <Button size="sm" className="flex-1 bg-primary" asChild>
+                    <Link to="/register">Register</Link>
+                  </Button>
+                </>
+              ))}
           </div>
         </div>
       )}

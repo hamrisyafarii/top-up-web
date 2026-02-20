@@ -39,7 +39,7 @@ const HeroSection = () => {
               size="lg"
               className="bg-primary hover:bg-primary/90 gap-2"
               asChild>
-              <Link to="/topup/mobile-legends">
+              <Link to="#">
                 Start Top Up <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>

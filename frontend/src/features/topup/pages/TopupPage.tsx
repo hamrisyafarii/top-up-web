@@ -3,15 +3,18 @@ import Navbar from "@/components/shared/Navbar";
 import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
+import {useAuth} from "@/hooks/useAuth";
 import {axiosInstance} from "@/lib/axios";
 import type {PaymentMethods, TopUpType} from "@/types/topup";
-import {ArrowLeft, CheckCircle2, ChevronRight, Diamond} from "lucide-react";
+import {ArrowLeft, CheckCircle2, Diamond} from "lucide-react";
 import {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 
 const TopupPage = () => {
   const params = useParams();
+  const {user} = useAuth();
   const slug = params.slug as string;
+  const navigate = useNavigate();
   const [products, setProducts] = useState<TopUpType | null>(null);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethods[]>([]);
 
@@ -45,6 +48,15 @@ const TopupPage = () => {
     };
     fetchProducts();
   }, []);
+
+  const handleSubmit = () => {
+    if (!user) {
+      navigate("/login");
+      return;
+    }
+
+    alert("Success");
+  };
 
   const pkg = products?.products.find((p) => p.id === selectedPkg);
 
@@ -169,7 +181,11 @@ const TopupPage = () => {
                       <button
                         key={pm.id}
                         onClick={() => setSelectedPayment(pm.id)}
-                        className={`flex items-center gap-3 rounded-xl px-4 py-3 border transition-all`}>
+                        className={`flex items-center gap-3 rounded-xl px-4 py-3 border transition-all ${
+                          selectedPayment === pm.id
+                            ? "border-primary bg-primary/10 glow-sm"
+                            : "border-border bg-muted hover:border-muted-foreground/30"
+                        }`}>
                         <img
                           src={pm.icon}
                           alt=""
@@ -178,7 +194,10 @@ const TopupPage = () => {
                         <span className="text-sm font-medium flex-1 text-left">
                           {pm.name}
                         </span>
-                        <ChevronRight className="h-4 w-4 text-muted-foreground" />
+
+                        {selectedPayment === pm.id ? (
+                          <CheckCircle2 className="top-2 right-2 h-4 w-4 text-primary" />
+                        ) : null}
                       </button>
                     );
                   })}
@@ -216,7 +235,7 @@ const TopupPage = () => {
                   {selectedPayment && (
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Payment</span>
-                      <span className="font-medium">
+                      <span className="font-medium capitalize">
                         {
                           paymentMethods.find((p) => p.id === selectedPayment)
                             ?.name
@@ -236,7 +255,8 @@ const TopupPage = () => {
                 <Button
                   className="w-full mt-6 bg-primary hover:bg-primary/90"
                   disabled={!userId || !selectedPkg || !selectedPayment}
-                  size="lg">
+                  size="lg"
+                  onClick={handleSubmit}>
                   Buy Now
                 </Button>
                 <p className="text-[11px] text-muted-foreground text-center mt-3">

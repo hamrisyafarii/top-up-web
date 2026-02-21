@@ -233,6 +233,7 @@ export type ProductWhereInput = {
   label?: Prisma.StringNullableFilter<"Product"> | string | null
   gameId?: Prisma.StringFilter<"Product"> | string
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
+  transactions?: Prisma.TransactionListRelationFilter
 }
 
 export type ProductOrderByWithRelationInput = {
@@ -243,6 +244,7 @@ export type ProductOrderByWithRelationInput = {
   label?: Prisma.SortOrderInput | Prisma.SortOrder
   gameId?: Prisma.SortOrder
   game?: Prisma.GameOrderByWithRelationInput
+  transactions?: Prisma.TransactionOrderByRelationAggregateInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
@@ -256,6 +258,7 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   label?: Prisma.StringNullableFilter<"Product"> | string | null
   gameId?: Prisma.StringFilter<"Product"> | string
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
+  transactions?: Prisma.TransactionListRelationFilter
 }, "id">
 
 export type ProductOrderByWithAggregationInput = {
@@ -291,6 +294,7 @@ export type ProductCreateInput = {
   price: number
   label?: string | null
   game: Prisma.GameCreateNestedOneWithoutProductInput
+  transactions?: Prisma.TransactionCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateInput = {
@@ -300,6 +304,7 @@ export type ProductUncheckedCreateInput = {
   price: number
   label?: string | null
   gameId: string
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
@@ -309,6 +314,7 @@ export type ProductUpdateInput = {
   price?: Prisma.IntFieldUpdateOperationsInput | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   game?: Prisma.GameUpdateOneRequiredWithoutProductNestedInput
+  transactions?: Prisma.TransactionUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
@@ -318,6 +324,7 @@ export type ProductUncheckedUpdateInput = {
   price?: Prisma.IntFieldUpdateOperationsInput | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
@@ -395,6 +402,11 @@ export type ProductSumOrderByAggregateInput = {
   price?: Prisma.SortOrder
 }
 
+export type ProductScalarRelationFilter = {
+  is?: Prisma.ProductWhereInput
+  isNot?: Prisma.ProductWhereInput
+}
+
 export type ProductCreateNestedManyWithoutGameInput = {
   create?: Prisma.XOR<Prisma.ProductCreateWithoutGameInput, Prisma.ProductUncheckedCreateWithoutGameInput> | Prisma.ProductCreateWithoutGameInput[] | Prisma.ProductUncheckedCreateWithoutGameInput[]
   connectOrCreate?: Prisma.ProductCreateOrConnectWithoutGameInput | Prisma.ProductCreateOrConnectWithoutGameInput[]
@@ -453,12 +465,27 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ProductCreateNestedOneWithoutTransactionsInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutTransactionsInput, Prisma.ProductUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutTransactionsInput
+  connect?: Prisma.ProductWhereUniqueInput
+}
+
+export type ProductUpdateOneRequiredWithoutTransactionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutTransactionsInput, Prisma.ProductUncheckedCreateWithoutTransactionsInput>
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutTransactionsInput
+  upsert?: Prisma.ProductUpsertWithoutTransactionsInput
+  connect?: Prisma.ProductWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutTransactionsInput, Prisma.ProductUpdateWithoutTransactionsInput>, Prisma.ProductUncheckedUpdateWithoutTransactionsInput>
+}
+
 export type ProductCreateWithoutGameInput = {
   id?: string
   amount: number
   bonus?: number | null
   price: number
   label?: string | null
+  transactions?: Prisma.TransactionCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutGameInput = {
@@ -467,6 +494,7 @@ export type ProductUncheckedCreateWithoutGameInput = {
   bonus?: number | null
   price: number
   label?: string | null
+  transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductCreateOrConnectWithoutGameInput = {
@@ -507,6 +535,58 @@ export type ProductScalarWhereInput = {
   gameId?: Prisma.StringFilter<"Product"> | string
 }
 
+export type ProductCreateWithoutTransactionsInput = {
+  id?: string
+  amount: number
+  bonus?: number | null
+  price: number
+  label?: string | null
+  game: Prisma.GameCreateNestedOneWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutTransactionsInput = {
+  id?: string
+  amount: number
+  bonus?: number | null
+  price: number
+  label?: string | null
+  gameId: string
+}
+
+export type ProductCreateOrConnectWithoutTransactionsInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutTransactionsInput, Prisma.ProductUncheckedCreateWithoutTransactionsInput>
+}
+
+export type ProductUpsertWithoutTransactionsInput = {
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutTransactionsInput, Prisma.ProductUncheckedUpdateWithoutTransactionsInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutTransactionsInput, Prisma.ProductUncheckedCreateWithoutTransactionsInput>
+  where?: Prisma.ProductWhereInput
+}
+
+export type ProductUpdateToOneWithWhereWithoutTransactionsInput = {
+  where?: Prisma.ProductWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutTransactionsInput, Prisma.ProductUncheckedUpdateWithoutTransactionsInput>
+}
+
+export type ProductUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  bonus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  game?: Prisma.GameUpdateOneRequiredWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutTransactionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.IntFieldUpdateOperationsInput | number
+  bonus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  price?: Prisma.IntFieldUpdateOperationsInput | number
+  label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gameId?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
 export type ProductCreateManyGameInput = {
   id?: string
   amount: number
@@ -521,6 +601,7 @@ export type ProductUpdateWithoutGameInput = {
   bonus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactions?: Prisma.TransactionUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutGameInput = {
@@ -529,6 +610,7 @@ export type ProductUncheckedUpdateWithoutGameInput = {
   bonus?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   price?: Prisma.IntFieldUpdateOperationsInput | number
   label?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  transactions?: Prisma.TransactionUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutGameInput = {
@@ -540,6 +622,35 @@ export type ProductUncheckedUpdateManyWithoutGameInput = {
 }
 
 
+/**
+ * Count Type ProductCountOutputType
+ */
+
+export type ProductCountOutputType = {
+  transactions: number
+}
+
+export type ProductCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  transactions?: boolean | ProductCountOutputTypeCountTransactionsArgs
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductCountOutputType
+   */
+  select?: Prisma.ProductCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProductCountOutputType without action
+ */
+export type ProductCountOutputTypeCountTransactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.TransactionWhereInput
+}
+
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -549,6 +660,8 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   label?: boolean
   gameId?: boolean
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
+  transactions?: boolean | Prisma.Product$transactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -583,6 +696,8 @@ export type ProductSelectScalar = {
 export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "amount" | "bonus" | "price" | "label" | "gameId", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
+  transactions?: boolean | Prisma.Product$transactionsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
@@ -595,6 +710,7 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Product"
   objects: {
     game: Prisma.$GamePayload<ExtArgs>
+    transactions: Prisma.$TransactionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -998,6 +1114,7 @@ readonly fields: ProductFieldRefs;
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   game<T extends Prisma.GameDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GameDefaultArgs<ExtArgs>>): Prisma.Prisma__GameClient<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  transactions<T extends Prisma.Product$transactionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$transactionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransactionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1426,6 +1543,30 @@ export type ProductDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Products to delete.
    */
   limit?: number
+}
+
+/**
+ * Product.transactions
+ */
+export type Product$transactionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Transaction
+   */
+  select?: Prisma.TransactionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Transaction
+   */
+  omit?: Prisma.TransactionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.TransactionInclude<ExtArgs> | null
+  where?: Prisma.TransactionWhereInput
+  orderBy?: Prisma.TransactionOrderByWithRelationInput | Prisma.TransactionOrderByWithRelationInput[]
+  cursor?: Prisma.TransactionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.TransactionScalarFieldEnum | Prisma.TransactionScalarFieldEnum[]
 }
 
 /**

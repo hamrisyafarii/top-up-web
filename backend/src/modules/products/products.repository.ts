@@ -8,4 +8,12 @@ export class ProductsRepository {
   findAllProducts() {
     return this.database.product.findMany();
   }
+
+  findProductById(productId: string) {
+    return this.database.product.findUnique({
+      where: {
+        id: productId,
+      },
+    });
+  }
 }

@@ -26,8 +26,9 @@ model User {
   provider      String? @default("local")
   emailVerified Boolean @default(false)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
 
   @@map("users")
 }
@@ -41,7 +42,8 @@ model Game {
   category  String
   popular   Boolean?
 
-  product Product[]
+  product     Product[]
+  transaction Transaction[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -54,8 +56,9 @@ model Product {
   price  Int
   label  String?
 
-  gameId String
-  game   Game   @relation(fields: [gameId], references: [id])
+  gameId       String
+  game         Game          @relation(fields: [gameId], references: [id])
+  transactions Transaction[]
 }
 
 model PaymentMethod {
@@ -65,6 +68,40 @@ model PaymentMethod {
   type String
   icon String
 
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  transactions Transaction[]
+}
+
+model Transaction {
+  id              String            @id @default(uuid())
+  transactionCode String            @unique
+  playerId        String
+  zoneId          String
+  price           Int
+  status          StatusTransaction @default(PENDING)
+  productAmount   Int
+  productBonus    Int?
+
+  userId          String
+  user            User          @relation(fields: [userId], references: [id])
+  gameId          String
+  game            Game          @relation(fields: [gameId], references: [id])
+  productId       String
+  product         Product       @relation(fields: [productId], references: [id])
+  paymentMethodId String
+  paymentMethod   PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+
+  externalId String? @unique
+  invoiceUrl String?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum StatusTransaction {
+  PENDING
+  PAID
+  EXPIRED
+  FAILED
 }

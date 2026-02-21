@@ -9,5 +9,6 @@ import { GamesModule } from '../games/games.module';
   controllers: [ProductsController],
   providers: [ProductsRepository, ProductsService],
   imports: [DatabaseModule, GamesModule],
+  exports: [ProductsRepository],
 })
 export class ProductsModule {}

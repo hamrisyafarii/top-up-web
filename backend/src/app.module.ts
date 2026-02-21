@@ -7,6 +7,8 @@ import { DatabaseModule } from './infrastructure/datebase/database.module';
 import { ProductsModule } from './modules/products/products.module';
 import { PaymentMethodModule } from './modules/payment_method/payment_method.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { TransactionsModule } from './modules/transactions/transactions.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { AuthModule } from './modules/auth/auth.module';
     ProductsModule,
     PaymentMethodModule,
     AuthModule,
+    TransactionsModule,
+    PaymentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

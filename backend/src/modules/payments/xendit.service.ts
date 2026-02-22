@@ -17,6 +17,7 @@ export class XenditService {
         externalId,
         amount,
         description: 'Nggal Top up',
+        successRedirectUrl: process.env.XENDIT_SUCCESS_REDIRECT_URL,
       },
     });
   }

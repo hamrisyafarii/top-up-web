@@ -8,14 +8,17 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {Button} from "@/components/ui/button";
 import {useAuth} from "@/hooks/useAuth";
 import {useNavigate} from "react-router-dom";
+import {useEffect} from "react";
 
 const LoginPage = () => {
-  const {login, isLoading, user} = useAuth();
+  const {login, isLoading, user, isError} = useAuth();
   const navigate = useNavigate();
 
-  if (user && !isLoading) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const loginForm = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
@@ -26,17 +29,15 @@ const LoginPage = () => {
   });
 
   const handleSubmitForm = async (values: LoginFormSchema) => {
-    try {
-      const res = await login(values);
+    const res = await login(values);
 
-      if (res?.statusCode === 200) {
-        toast.success(res.message);
-        navigate("/");
-      }
-    } catch (error: any) {
-      if (error.response.data.statusCode === 401) {
-        toast.error(error.response.data.message);
-      }
+    if (res?.statusCode === 200) {
+      toast.success(res.message);
+      navigate("/");
+    }
+
+    if (isError?.response?.data.statusCode === 401) {
+      toast.error(isError?.response?.data.message);
     }
   };
 

@@ -1,8 +1,9 @@
-import RegisterPage from "@/features/auth/pages/RegisterPage";
 import LoginPage from "@/pages/auth/login";
+import RegisterPage from "@/pages/auth/register";
 import HomePage from "@/pages/home";
 import ProfilePage from "@/pages/profile";
 import TopupPage from "@/pages/topup";
+import PaymentSuccessPage from "@/pages/transaction/payment-success";
 import {createBrowserRouter} from "react-router-dom";
 
 export const router = createBrowserRouter([
@@ -29,5 +30,9 @@ export const router = createBrowserRouter([
   {
     path: "/profile",
     element: <ProfilePage />,
+  },
+  {
+    path: "/payment-success",
+    element: <PaymentSuccessPage />,
   },
 ]);

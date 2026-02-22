@@ -18,6 +18,8 @@ const TopupPage = () => {
   const [products, setProducts] = useState<TopUpType | null>(null);
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethods[]>([]);
 
+  const [loading, setLoading] = useState(false);
+
   const [userId, setUserId] = useState("");
   const [zoneId, setZoneId] = useState("");
   const [selectedPkg, setSelectedPkg] = useState<string | null>(null);
@@ -41,21 +43,38 @@ const TopupPage = () => {
       try {
         const {data} = await axiosInstance.get(`/games/${slug}/products`);
 
-        console.log(data);
-
         setProducts(data.data);
       } catch (error) {}
     };
     fetchProducts();
   }, []);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!user) {
       navigate("/login");
       return;
     }
 
-    alert("Success");
+    if (!selectedPayment && !selectedPkg) return;
+    setLoading(true);
+    try {
+      const {data} = await axiosInstance.post("/transactions", {
+        playerId: userId,
+        zoneId: zoneId,
+        productId: selectedPkg,
+        paymentMethodId: selectedPayment,
+      });
+
+      const invoiceUrl = data.data.transaction.invoiceUrl;
+
+      if (invoiceUrl) {
+        window.location.href = invoiceUrl;
+      }
+    } catch (error: any) {
+      console.error(error.response);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const pkg = products?.products.find((p) => p.id === selectedPkg);
@@ -254,10 +273,12 @@ const TopupPage = () => {
                 </div>
                 <Button
                   className="w-full mt-6 bg-primary hover:bg-primary/90"
-                  disabled={!userId || !selectedPkg || !selectedPayment}
+                  disabled={
+                    loading || !userId || !selectedPkg || !selectedPayment
+                  }
                   size="lg"
                   onClick={handleSubmit}>
-                  Buy Now
+                  {loading ? "Processing..." : "Buy now"}
                 </Button>
                 <p className="text-[11px] text-muted-foreground text-center mt-3">
                   By purchasing, you agree to our Terms of Service

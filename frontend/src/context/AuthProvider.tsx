@@ -8,6 +8,8 @@ import type {RegisterFormSchema} from "@/features/auth/forms/register";
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
+  isError: any;
+
   login: (values: LoginFormSchema) => Promise<any>;
   logout: () => void;
   register: (values: RegisterFormSchema) => Promise<any>;
@@ -18,6 +20,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState<string | null>(null);
 
   // cek user saat app pertama kali load
   useEffect(() => {
@@ -27,8 +30,6 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       setIsLoading(false);
       return;
     }
-
-    axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
     axiosInstance
       .get("/auth/profile")
@@ -52,8 +53,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
       setIsLoading(false);
 
       return res.data;
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
+      setIsError(error);
     } finally {
       setIsLoading(false);
     }
@@ -86,7 +87,8 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
   };
 
   return (
-    <AuthContext.Provider value={{user, isLoading, login, logout, register}}>
+    <AuthContext.Provider
+      value={{user, isLoading, login, logout, register, isError}}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,7 +1,7 @@
-import {Search, Gamepad2, Menu, X, LogOut, User} from "lucide-react";
+import {Search, Gamepad2, Menu, X, LogOut, User, TrashIcon} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
-import {Link} from "react-router-dom";
+import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {useState} from "react";
 import {useAuth} from "@/hooks/useAuth";
 import {Tooltip, TooltipContent, TooltipTrigger} from "../ui/tooltip";
@@ -9,6 +9,23 @@ import {Tooltip, TooltipContent, TooltipTrigger} from "../ui/tooltip";
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const {isLoading, user, logout} = useAuth();
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const [_searchParams, setSearchParams] = useSearchParams();
+
+  const handleClear = () => {
+    setSearchParams({});
+
+    setSearch("");
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!search.trim()) return;
+
+    navigate(`/?search=${search}`);
+  };
 
   const handleLogout = () => {
     const alertLogout = confirm("Apakah kamu yakin ingin keluar?");
@@ -30,12 +47,26 @@ const Navbar = () => {
         </Link>
 
         {/* Search - Desktop */}
-        <div className="hidden md:flex flex-1 max-w-md relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search games..."
-            className="pl-9 bg-secondary border-border focus-visible:ring-primary/50"
-          />
+        <div className="hidden md:flex flex-1 items-center max-w-md relative gap-2">
+          <form
+            onSubmit={handleSearch}
+            className="hidden md:flex flex-1 items-center max-w-md relative">
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search games..."
+              className="pl-9 bg-secondary border-border focus-visible:ring-primary/50"
+            />
+            <Button
+              className="absolute right-3 size-7 "
+              variant={"ghost"}
+              type="submit">
+              <Search />
+            </Button>
+          </form>
+          <Button onClick={handleClear} size={"icon-sm"}>
+            <TrashIcon />
+          </Button>
         </div>
 
         {/* Actions - Desktop */}

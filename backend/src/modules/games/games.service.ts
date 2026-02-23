@@ -4,6 +4,7 @@ import { UpdateGameDto } from './dto/update-game.dto';
 import { GameRepository } from './games.repository';
 import { ApiResponse } from 'src/common/interfaces/response.interfce';
 import { GameEntity } from './entities/game.entity';
+import { BaseQuery } from './entities/base-query.entity';
 
 @Injectable()
 export class GamesService {
@@ -19,13 +20,13 @@ export class GamesService {
     };
   }
 
-  async findAll(): Promise<ApiResponse<GameEntity[]>> {
-    const games = await this.gamesRepo.findMany();
+  async findAll(query: BaseQuery): Promise<ApiResponse<{ data: GameEntity[]; meta: any }>> {
+    const result = await this.gamesRepo.findMany(query);
 
     return {
       statusCode: 200,
       message: 'Successfully get all games',
-      data: games,
+      data: result,
     };
   }
 

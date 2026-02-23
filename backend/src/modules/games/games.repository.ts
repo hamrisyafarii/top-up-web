@@ -3,17 +3,39 @@ import { DatabaseService } from 'src/infrastructure/datebase/database.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { Prisma } from 'src/generated/prisma/client';
+import { queryBuilder } from 'src/common/utils/build-filter.util';
+import { BaseQuery } from './entities/base-query.entity';
 
 @Injectable()
 export class GameRepository {
   constructor(private readonly database: DatabaseService) {}
 
-  findMany() {
-    return this.database.game.findMany({
-      orderBy: {
-        createdAt: 'asc',
-      },
+  async findMany(query: BaseQuery) {
+    const qb = queryBuilder<Prisma.GameWhereInput, Prisma.GameOrderByWithRelationInput>({
+      query,
+      searchFields: ['title', 'developer'],
     });
+
+    const [data, total] = await Promise.all([
+      this.database.game.findMany({
+        where: qb.where,
+        skip: qb.skip,
+        take: qb.take,
+        orderBy: qb.orderBy,
+      }),
+      this.database.game.count({
+        where: qb.where,
+      }),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page: qb.page,
+        lastPage: Math.ceil(total / qb.takeNumber),
+      },
+    };
   }
 
   create(createGameDto: CreateGameDto) {

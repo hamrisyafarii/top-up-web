@@ -1,9 +1,18 @@
-import {Link} from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 import {Badge} from "@/components/ui/badge";
 import {useGames} from "@/hooks/useGames";
 
 const GameGrid = () => {
-  const {games} = useGames();
+  const [searchParams] = useSearchParams();
+  const search = searchParams.get("search") || "";
+
+
+
+  const {games} = useGames({
+    search,
+    page: 1,
+    limit: 10,
+  });
 
   return (
     <section className="py-16">

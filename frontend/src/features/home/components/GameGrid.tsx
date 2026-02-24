@@ -1,17 +1,17 @@
 import {Link, useSearchParams} from "react-router-dom";
 import {Badge} from "@/components/ui/badge";
 import {useGames} from "@/hooks/useGames";
+import Pagination from "./Pagination";
 
 const GameGrid = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get("search") || "";
+  const page = Number(searchParams.get("page")) || 1;
 
-
-
-  const {games} = useGames({
+  const {games, meta} = useGames({
     search,
-    page: 1,
-    limit: 10,
+    page,
+    limit: 4,
   });
 
   return (
@@ -56,6 +56,11 @@ const GameGrid = () => {
             </Link>
           ))}
         </div>
+        <Pagination
+          meta={meta}
+          setSearchParams={setSearchParams}
+          search={search}
+        />
       </div>
     </section>
   );

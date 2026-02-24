@@ -9,3 +9,9 @@ export type Games = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type Meta = {
+  total: number;
+  page: number;
+  lastPage: number;
+};

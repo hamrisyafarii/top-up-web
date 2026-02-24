@@ -4,50 +4,27 @@ import {Badge} from "@/components/ui/badge";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
 import {useAuth} from "@/hooks/useAuth";
-import {axiosInstance} from "@/lib/axios";
-import type {PaymentMethods, TopUpType} from "@/types/topup";
+import {useCreateTransaction} from "@/hooks/useCreateTransaction";
+import {usePaymentMethods} from "@/hooks/usePaymentMethods";
+import {useProducts} from "@/hooks/useProducts";
 import {ArrowLeft, CheckCircle2, Diamond} from "lucide-react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 
 const TopupPage = () => {
-  const params = useParams();
-  const {user} = useAuth();
-  const slug = params.slug as string;
   const navigate = useNavigate();
-  const [products, setProducts] = useState<TopUpType | null>(null);
-  const [paymentMethods, setPaymentMethods] = useState<PaymentMethods[]>([]);
+  const params = useParams();
+  const slug = params.slug as string;
 
-  const [loading, setLoading] = useState(false);
+  const {user} = useAuth();
+  const {paymentMethods} = usePaymentMethods();
+  const {products} = useProducts(slug);
+  const {mutateAsync, isPending} = useCreateTransaction();
 
   const [userId, setUserId] = useState("");
   const [zoneId, setZoneId] = useState("");
   const [selectedPkg, setSelectedPkg] = useState<string | null>(null);
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchPaymentMethods = async () => {
-      try {
-        const {data} = await axiosInstance.get("/payment-methods");
-
-        setPaymentMethods(data.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchPaymentMethods();
-  }, []);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const {data} = await axiosInstance.get(`/games/${slug}/products`);
-
-        setProducts(data.data);
-      } catch (error) {}
-    };
-    fetchProducts();
-  }, []);
 
   const handleSubmit = async () => {
     if (!user) {
@@ -55,25 +32,23 @@ const TopupPage = () => {
       return;
     }
 
-    if (!selectedPayment && !selectedPkg) return;
-    setLoading(true);
+    if (!selectedPayment || !selectedPkg) return;
+
     try {
-      const {data} = await axiosInstance.post("/transactions", {
+      const res = await mutateAsync({
         playerId: userId,
-        zoneId: zoneId,
+        zoneId,
         productId: selectedPkg,
         paymentMethodId: selectedPayment,
       });
 
-      const invoiceUrl = data.data.transaction.invoiceUrl;
+      const invoiceUrl = res.transaction.invoiceUrl;
 
       if (invoiceUrl) {
         window.location.href = invoiceUrl;
       }
-    } catch (error: any) {
-      console.error(error.response);
-    } finally {
-      setLoading(false);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -195,7 +170,7 @@ const TopupPage = () => {
                   <h2 className="font-semibold">Payment Method</h2>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3">
-                  {paymentMethods.map((pm) => {
+                  {paymentMethods?.map((pm) => {
                     return (
                       <button
                         key={pm.id}
@@ -256,7 +231,7 @@ const TopupPage = () => {
                       <span className="text-muted-foreground">Payment</span>
                       <span className="font-medium capitalize">
                         {
-                          paymentMethods.find((p) => p.id === selectedPayment)
+                          paymentMethods?.find((p) => p.id === selectedPayment)
                             ?.name
                         }
                       </span>
@@ -274,11 +249,11 @@ const TopupPage = () => {
                 <Button
                   className="w-full mt-6 bg-primary hover:bg-primary/90"
                   disabled={
-                    loading || !userId || !selectedPkg || !selectedPayment
+                    isPending || !userId || !selectedPkg || !selectedPayment
                   }
                   size="lg"
                   onClick={handleSubmit}>
-                  {loading ? "Processing..." : "Buy now"}
+                  {isPending ? "Processing..." : "Buy now"}
                 </Button>
                 <p className="text-[11px] text-muted-foreground text-center mt-3">
                   By purchasing, you agree to our Terms of Service

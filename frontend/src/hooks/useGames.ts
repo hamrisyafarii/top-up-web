@@ -1,45 +1,41 @@
 import {axiosInstance} from "@/lib/axios";
-import type {Games} from "@/types/games";
-import {useEffect, useState} from "react";
+import type {Games, Meta} from "@/types/games";
+import {useQuery} from "@tanstack/react-query";
 
-export const useGames = (params?: {
+type Params = {
   search?: string;
   page?: number;
   limit?: number;
-}) => {
-  const [games, setGames] = useState<Games[]>([]);
-  const [meta, setMeta] = useState({
-    total: 0,
-    page: 1,
-    lastPage: 1,
-  });
-  const [isLoading, setIsLoading] = useState(false);
+};
 
-  const fetchAllGames = async () => {
-    setIsLoading(true);
-    try {
-      const {data} = await axiosInstance.get("/games", {
-        params,
-      });
+type GamesResponse = {
+  data: Games[];
+  meta: Meta;
+};
 
-      if (data.statusCode === 200) {
-        setGames(data.data.data);
-        setMeta(data.data.meta);
-      }
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
+export const useGames = (params?: Params) => {
+  const fetchGames = async (): Promise<GamesResponse> => {
+    const {data} = await axiosInstance.get("/games", {
+      params,
+    });
+
+    return data.data;
   };
 
-  useEffect(() => {
-    fetchAllGames();
-  }, [JSON.stringify(params)]);
+  const {data, isLoading, isError} = useQuery<GamesResponse>({
+    queryKey: ["games", params],
+    queryFn: fetchGames,
+    staleTime: 1000 * 60 * 5,
+  });
 
   return {
-    games,
-    meta,
+    games: data?.data ?? [],
+    meta: data?.meta ?? {
+      total: 0,
+      page: 1,
+      lastPage: 1,
+    },
     isLoading,
+    isError,
   };
 };

@@ -20,10 +20,17 @@ export class TransactionsRepository {
     });
   }
 
-  async findAllTransaction() {
+  async findAllTransactionByUser(userId: string) {
     return await this.database.transaction.findMany({
+      where: {
+        userId,
+      },
       orderBy: {
         createdAt: 'asc',
+      },
+      include: {
+        game: true,
+        paymentMethod: { select: { name: true } },
       },
     });
   }

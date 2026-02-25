@@ -70,8 +70,8 @@ export class TransactionsService {
     };
   }
 
-  async getAllTransaction(): Promise<ApiResponse> {
-    const transactions = await this.transactionRepo.findAllTransaction();
+  async getAllTransaction(userId: string): Promise<ApiResponse> {
+    const transactions = await this.transactionRepo.findAllTransactionByUser(userId);
 
     return {
       statusCode: 200,

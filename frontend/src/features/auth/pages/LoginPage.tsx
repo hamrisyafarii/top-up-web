@@ -34,11 +34,15 @@ const LoginPage = () => {
     if (res?.statusCode === 200) {
       toast.success(res.message);
       navigate("/");
+      return;
     }
 
-    if (isError?.response?.data.statusCode === 401) {
-      toast.error(isError?.response?.data.message);
+    if (isError?.response?.data?.statusCode === 401) {
+      toast.error(isError?.response?.data?.message);
+      return;
     }
+
+    return;
   };
 
   return (

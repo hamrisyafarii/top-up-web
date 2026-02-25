@@ -3,6 +3,7 @@ import RegisterPage from "@/pages/auth/register";
 import HomePage from "@/pages/home";
 import ProfilePage from "@/pages/profile";
 import TopupPage from "@/pages/topup";
+import HistoryPage from "@/pages/transaction/history";
 import PaymentSuccessPage from "@/pages/transaction/payment-success";
 import {createBrowserRouter} from "react-router-dom";
 
@@ -34,5 +35,9 @@ export const router = createBrowserRouter([
   {
     path: "/payment-success",
     element: <PaymentSuccessPage />,
+  },
+  {
+    path: "/history-transaction",
+    element: <HistoryPage />,
   },
 ]);

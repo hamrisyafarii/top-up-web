@@ -4,7 +4,6 @@ import {Input} from "@/components/ui/input";
 import {Link, useNavigate, useSearchParams} from "react-router-dom";
 import {useState} from "react";
 import {useAuth} from "@/hooks/useAuth";
-import {Tooltip, TooltipContent, TooltipTrigger} from "../ui/tooltip";
 
 const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -84,19 +83,11 @@ const Navbar = () => {
                     {user.username || user.email}
                   </Link>
                 </Button>
-                {/* Upcoming feature */}
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <span className="inline-block w-fit">
-                      <Button variant="ghost" disabled>
-                        History
-                      </Button>
-                    </span>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>This feature is currently unavailable</p>
-                  </TooltipContent>
-                </Tooltip>
+                <span className="inline-block w-fit">
+                  <Button variant="ghost">
+                    <Link to={"/history-transaction"}>History</Link>
+                  </Button>
+                </span>
                 <Button
                   variant="ghost"
                   onClick={handleLogout}

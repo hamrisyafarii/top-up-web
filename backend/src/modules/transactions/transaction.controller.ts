@@ -22,7 +22,7 @@ export class TransactionsController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  getAllTransaction() {
-    return this.transactionService.getAllTransaction();
+  getAllTransaction(@Req() req: RequestWithUser) {
+    return this.transactionService.getAllTransaction(req.user.id);
   }
 }

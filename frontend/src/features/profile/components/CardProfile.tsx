@@ -1,16 +1,57 @@
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
-import {Tooltip, TooltipContent, TooltipTrigger} from "@/components/ui/tooltip";
 import type {User} from "@/types/user";
-import {Loader2, User2} from "lucide-react";
+import {Loader2, SaveIcon, User2} from "lucide-react";
+import {useState, useEffect} from "react";
+import {toast} from "sonner";
+
+type UpdatedProfile = {
+  username?: string;
+  name?: string;
+};
 
 type CardProfileProps = {
   user: User | null;
   isLoading: boolean;
+  onUpdate: (data: UpdatedProfile) => Promise<any>;
 };
 
-const CardProfile = ({isLoading, user}: CardProfileProps) => {
+const CardProfile = ({isLoading, user, onUpdate}: CardProfileProps) => {
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.username || "");
+      setName(user.name || "");
+    }
+  }, [user]);
+
+  const hasChanges =
+    username !== (user?.username || "") || name !== (user?.name || "");
+
+  const handleSave = async () => {
+    if (!hasChanges) return;
+
+    setIsSaving(true);
+    try {
+      const data: UpdatedProfile = {};
+      if (username !== (user?.username || "")) data.username = username;
+      if (name !== (user?.name || "")) data.name = name;
+
+      const res = await onUpdate(data);
+      toast.success(res.message || "Profile updated successfully");
+    } catch (error: any) {
+      const message =
+        error?.response?.data?.message || "Failed to update profile";
+      toast.error(message);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   return (
     <main className="pt-24 pb-16">
       <div className="container mx-auto px-4 max-w-lg">
@@ -51,30 +92,43 @@ const CardProfile = ({isLoading, user}: CardProfileProps) => {
                   Username
                 </label>
                 <Input
-                  disabled
-                  value={user?.username}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   placeholder="Your username"
+                  className="bg-secondary border-border"
+                  maxLength={25}
+                />
+              </div>
+              <div>
+                <label className="text-xs text-muted-foreground mb-1.5 block">
+                  Name
+                </label>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your name"
                   className="bg-secondary border-border"
                   maxLength={100}
                 />
               </div>
             </div>
 
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <span className="">
-                  <Button
-                    variant="ghost"
-                    disabled
-                    className="w-full bg-primary hover:bg-primary/90">
-                    Save Changes
-                  </Button>
-                </span>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>This feature is currently unavailable</p>
-              </TooltipContent>
-            </Tooltip>
+            <Button
+              disabled={!hasChanges || isSaving}
+              onClick={handleSave}
+              className="w-full bg-primary hover:bg-primary/90">
+              {isSaving ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <SaveIcon className="h-4 w-4" />
+                  Save Changes
+                </>
+              )}
+            </Button>
           </div>
         )}
       </div>

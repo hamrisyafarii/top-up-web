@@ -64,4 +64,11 @@ export class AuthRepository {
       },
     });
   }
+
+  async updateUser(userId: string, data: { username?: string; name?: string }) {
+    return await this.database.user.update({
+      where: { id: userId },
+      data,
+    });
+  }
 }

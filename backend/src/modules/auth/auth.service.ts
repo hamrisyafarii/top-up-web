@@ -1,5 +1,6 @@
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { AuthRepository } from './auth.repository';
 import bcrypt from 'bcrypt';
 import { Auth, AuthResponse } from './entities/auth.entity';
@@ -119,6 +120,28 @@ export class AuthService {
       email: user.email,
       username: user.username || '',
       name: user.name || '',
+    };
+  }
+
+  async updateProfile(userId: string, dto: UpdateProfileDto): Promise<ApiResponse<Auth>> {
+    if (dto.username) {
+      const existingUser = await this.authRepo.findByUsername(dto.username);
+      if (existingUser && existingUser.id !== userId) {
+        throw new ConflictException('Username is already used');
+      }
+    }
+
+    const updatedUser = await this.authRepo.updateUser(userId, dto);
+
+    return {
+      statusCode: 200,
+      message: 'Profile updated successfully',
+      data: {
+        id: updatedUser.id,
+        email: updatedUser.email,
+        username: updatedUser.username ?? '',
+        name: updatedUser.name ?? '',
+      },
     };
   }
 

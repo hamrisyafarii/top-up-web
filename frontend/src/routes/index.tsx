@@ -1,6 +1,7 @@
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
 import HomePage from "@/pages/home";
+import NotFoundPage from "@/pages/not-found";
 import ProfilePage from "@/pages/profile";
 import TopupPage from "@/pages/topup";
 import HistoryPage from "@/pages/transaction/history";
@@ -10,7 +11,7 @@ import {createBrowserRouter} from "react-router-dom";
 export const router = createBrowserRouter([
   {
     path: "*",
-    element: <div>Not Found</div>,
+    element: <NotFoundPage />,
   },
   {
     path: "/",

@@ -13,6 +13,7 @@ interface AuthContextType {
   login: (values: LoginFormSchema) => Promise<any>;
   logout: () => void;
   register: (values: RegisterFormSchema) => Promise<any>;
+  updateProfile: (data: {username?: string; name?: string}) => Promise<any>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
@@ -86,9 +87,27 @@ export const AuthProvider = ({children}: {children: React.ReactNode}) => {
     window.location.href = "/login";
   };
 
+  const updateProfile = async (data: {username?: string; name?: string}) => {
+    try {
+      const res = await axiosInstance.patch("/auth/profile", data);
+      setUser((prev) => (prev ? {...prev, ...res.data.data} : prev));
+      return res.data;
+    } catch (error: any) {
+      throw error;
+    }
+  };
+
   return (
     <AuthContext.Provider
-      value={{user, isLoading, login, logout, register, isError}}>
+      value={{
+        user,
+        isLoading,
+        login,
+        logout,
+        register,
+        isError,
+        updateProfile,
+      }}>
       {children}
     </AuthContext.Provider>
   );

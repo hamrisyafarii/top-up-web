@@ -1,6 +1,7 @@
-import { Controller, Post, Body, Get, UseGuards, Res, Req } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, UseGuards, Res, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CurrentUser } from './decorators/current-user.decorator';
@@ -30,6 +31,12 @@ export class AuthController {
       message: `Successfully get profile ${user.username}`,
       data: user,
     };
+  }
+
+  @Patch('profile')
+  @UseGuards(JwtAuthGuard)
+  updateProfile(@CurrentUser() user: Auth, @Body() dto: UpdateProfileDto) {
+    return this.authService.updateProfile(user.id, dto);
   }
 
   @Get('google')

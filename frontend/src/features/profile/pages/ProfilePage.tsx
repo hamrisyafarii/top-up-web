@@ -4,11 +4,11 @@ import {useAuth} from "@/hooks/useAuth";
 import CardProfile from "../components/CardProfile";
 
 const ProfilePage = () => {
-  const {user, isLoading} = useAuth();
+  const {user, isLoading, updateProfile} = useAuth();
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <CardProfile isLoading={isLoading} user={user} />
+      <CardProfile isLoading={isLoading} user={user} onUpdate={updateProfile} />
       <Footer />
     </div>
   );

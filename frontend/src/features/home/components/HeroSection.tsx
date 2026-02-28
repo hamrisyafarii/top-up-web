@@ -39,15 +39,16 @@ const HeroSection = () => {
               size="lg"
               className="bg-primary hover:bg-primary/90 gap-2"
               asChild>
-              <Link to="#">
+              <a href="#games">
                 Start Top Up <ArrowRight className="h-4 w-4" />
-              </Link>
+              </a>
             </Button>
             <Button
               size="lg"
               variant="outline"
-              className="border-border hover:bg-secondary">
-              Browse Games
+              className="border-border hover:bg-secondary"
+              asChild>
+              <a href="#games">Browse Games</a>
             </Button>
           </div>
         </div>

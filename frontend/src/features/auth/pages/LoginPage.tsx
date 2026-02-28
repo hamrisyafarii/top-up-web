@@ -9,6 +9,7 @@ import {Button} from "@/components/ui/button";
 import {useAuth} from "@/hooks/useAuth";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
+import {GlobeIcon} from "lucide-react";
 
 const LoginPage = () => {
   const {login, isLoading, user, isError} = useAuth();
@@ -43,6 +44,12 @@ const LoginPage = () => {
     }
 
     return;
+  };
+
+  const API_URL = import.meta.env.VITE_API_URL;
+
+  const handleLoginWithGoogle = () => {
+    window.location.href = `${API_URL}/auth/google`;
   };
 
   return (
@@ -98,6 +105,15 @@ const LoginPage = () => {
           {isLoading ? "loading..." : "Sign In"}
         </Button>
       </form>
+
+      <div className="my-4">
+        <Button
+          className="w-full"
+          variant={"outline"}
+          onClick={handleLoginWithGoogle}>
+          Login with Google <GlobeIcon />
+        </Button>
+      </div>
     </AuthLayout>
   );
 };

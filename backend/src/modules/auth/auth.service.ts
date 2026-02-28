@@ -81,6 +81,32 @@ export class AuthService {
     };
   }
 
+  async validateOAuthUser(profile: {
+    googleId: string;
+    email: string;
+    name?: string;
+    avatar?: string;
+    provider: string;
+  }) {
+    let user = await this.authRepo.findByGoogleId(profile.googleId);
+
+    if (user) {
+      return user;
+    }
+
+    user = await this.authRepo.findUserByEmail(profile.email);
+
+    if (user) {
+      // You can update user with Google ID here if needed
+      return user;
+    }
+
+    // Create new user
+    user = await this.authRepo.createOAuthUser(profile);
+
+    return user;
+  }
+
   async validateUser(userId: string): Promise<Auth | null> {
     const user = await this.authRepo.findUserById(userId);
 
